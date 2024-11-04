@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candle Chart of Ticker 381170</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Candle Chart for Ticker 381170</h1>
+    <div id="current-price"></div>
+    <div id="candle-chart" style="width:100%;height:500px;"></div>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/data', function (data) {
+                // Displaying current price
+                $('#current-price').html("<h2>Current Price: " + data.CurrentPrice + "</h2>");
+
+                // Creating candle chart using Plotly
+                var trace = {
+                    x: data.Date,
+                    open: data.Open,
+                    close: data.Close,
+                    high: data.High,
+                    low: data.Low,
+                    type: 'candlestick',
+                    xaxis: 'x',
+                    yaxis: 'y'
+                };
+
+                var layout = {
+                    title: '6-Month Candle Chart',
+                    xaxis: {
+                        title: 'Date'
+                    },
+                    yaxis: {
+                        title: 'Price'
+                    }
+                };
+
+                Plotly.newPlot('candle-chart', [trace], layout);
+            });
+        });
+    </script>
+</body>
+</html>
